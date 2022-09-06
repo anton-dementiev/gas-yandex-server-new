@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 const user = process.env.DB_USER;
 const pwd = process.env.PASSWORD;
