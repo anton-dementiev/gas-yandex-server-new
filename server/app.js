@@ -1,4 +1,6 @@
+//Load env variables (Don't use USER!)
 require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');

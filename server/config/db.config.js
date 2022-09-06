@@ -1,17 +1,18 @@
 const mysql = require('mysql');
 
-const USER = process.env.USER;
-const PASSWORD = process.env.PASSWORD;
+const user = process.env.DB_USER;
+const pwd = process.env.PASSWORD;
+const db = process.env.DB_NAME;
 
-console.log(USER);
+console.log(user);
 
 
 //local mysql db connetion
 const cn = mysql.createConnection({
     host: 'localhost',
-    user: "root",
-    password: "309013abraham",
-    database: 'fundemic_new'
+    user: user,
+    password: pwd,
+    database: db,
 });
 
 cn.connect( err => {
