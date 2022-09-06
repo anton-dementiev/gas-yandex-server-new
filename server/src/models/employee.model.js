@@ -34,7 +34,7 @@ const createEmployee = (newEmp, result) => {
 
 const getEmployeeById = (employeeId, result) => {
   console.log(employeeId);
-   cn.query("SELECT * FROM EMPLOYEES WHERE employee_id=?", [employeeId], (err, rows, fields)=>{
+   cn.query("SELECT * FROM employees WHERE employee_id=?", [employeeId], (err, rows, fields)=>{
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -57,7 +57,7 @@ const updateEmployee =(employeeId, employee, result) => {
 }
 
 const getAllEmployees =  (result) => {
-    cn.query("SELECT * FROM EMPLOYEES WHERE deleted_at IS NULL", (err, rows, fields)=> {
+    cn.query("SELECT * FROM employees WHERE deleted_at IS NULL", (err, rows, fields)=> {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -72,7 +72,7 @@ const deleteEmployeeById = (employeeId, result) => {
 
     console.log(employeeId);
 
-    cn.query("UPDATE EMPLOYEES SET deleted_at=? WHERE employee_id=?", [new Date(), employeeId], (err, rows, fields)=> {
+    cn.query("UPDATE employees SET deleted_at=? WHERE employee_id=?", [new Date(), employeeId], (err, rows, fields)=> {
        if (err) {
         console.log("error: ", err);
         result(err, null);
