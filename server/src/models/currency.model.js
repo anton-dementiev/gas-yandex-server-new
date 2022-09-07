@@ -1,0 +1,97 @@
+const cn = require('../../config/db.config');
+
+
+const newCurrency  = (currency) => {
+
+   return {
+    title: currency.title,
+    symbol: currency.symbol,
+    code: currency.code,
+    cbr_code: currency.cbr_code,
+    created_at: new Date(),
+    deleted_at: null,
+
+    
+   }; 
+
+    
+};
+
+
+const createCurrency = (newCurrency, result) => {
+
+    cn.query("INSERT INTO currencies set ?", newCurrency, (err, res)=>{
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        } else {
+            result(false, newCurrency);
+        }
+
+
+    });
+}
+
+const updateCurrency =(currencyId, currency, result) => {
+
+    cn.query("UPDATE currencies SET ? WHERE currency_id=?", [currency, currencyId], (err, rows, fields) =>{
+        if (err) {
+            console.log("error", err);
+            result(err, null);
+        } else {
+            result(false, rows);
+        }
+    });
+}
+
+
+const getCurrencyById = (currencyId, result) => {
+  console.log(currencyId);
+   cn.query("SELECT * FROM currencies WHERE currency_id=?", [currencyId], (err, rows, fields)=>{
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        } else {
+            console.log(rows);
+            result(false, rows);
+        }
+   });
+}
+
+const getAllCurrencies =  (result) => {
+    cn.query("SELECT * FROM currencies WHERE deleted_at IS NULL", (err, rows, fields)=> {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+        } else  {
+            result(false, rows);
+        }
+    });
+}
+
+
+const deleteCurrencyById = (currencyId, result) => {
+
+    console.log(currencyId);
+
+    cn.query("UPDATE currencies SET deleted_at=? WHERE currency_id=?", [new Date(), currencyId], (err, rows, fields)=> {
+       if (err) {
+        console.log("error: ", err);
+        result(err, null);
+      
+       } else {
+         result(false, rows);
+       }
+
+    });
+}
+
+
+module.exports = {
+    newCurrency, 
+    createCurrency, 
+    updateCurrency,
+    getCurrencyById,
+    getAllCurrencies,
+    deleteCurrencyById,
+};
