@@ -17,7 +17,7 @@ const createEmployee = (req, res) => {
 const getEmployeeById = (req, res) => {
 
     const employeeId = req.params.id;
-    const employee = Employee.getEmployeeById(employeeId, (err, employee)=>{
+    Employee.getEmployeeById(employeeId, (err, employee)=>{
         if (err) {
             res.send(err);
         }
@@ -42,7 +42,7 @@ const updateEmployee = (req, res) => {
 
 const getAllEmployees = (req, res) => {
 
-    const employees = Employee.getAllEmployees( (err, employees)=> {
+    Employee.getAllEmployees( (err, employees)=> {
         if (err) {
             res.send(err);
         }

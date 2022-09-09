@@ -32,7 +32,7 @@ const updateProject = (req, res) => {
 const getProjectById = (req, res) => {
     
     const projectId = req.params.id;
-    const project = Project.getProjectById(projectId, (err, project)=>{
+    Project.getProjectById(projectId, (err, project)=>{
 
         if (err) {
             res.send(err);
@@ -46,7 +46,7 @@ const getProjectById = (req, res) => {
 
 const getAllProjects = (req, res) => {
 
-    const Projects = Project.getAllProjects( (err, projects)=> {
+    Project.getAllProjects( (err, projects)=> {
         if (err) {
             res.send(err);
         }

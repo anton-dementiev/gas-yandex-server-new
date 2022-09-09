@@ -45,12 +45,13 @@ const getCurrencyById = (req, res) => {
 
 const getAllCurrencies = (req, res) => {
 
-    const currencies = Currency.getAllCurrencies( (err, Currencys)=> {
+     Currency.getAllCurrencies( (err, currencies)=> {
+        
         if (err) {
             res.send(err);
         }
 
-        res.json({error: false, message: "Success", data: Currencys})
+        res.json({error: false, message: "Success", data: currencies})
     });
 }
 

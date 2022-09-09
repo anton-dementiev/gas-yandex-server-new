@@ -30,7 +30,7 @@ const updateClient = (req, res) => {
 const getClientById = (req, res) => {
     
     const clientId = req.params.id;
-    const client = Client.getClientById(clientId, (err, client)=>{
+   Client.getClientById(clientId, (err, client)=>{
         if (err) {
             res.send(err);
         }
@@ -43,7 +43,7 @@ const getClientById = (req, res) => {
 
 const getAllClients = (req, res) => {
 
-    const clients = Client.getAllClients( (err, clients)=> {
+    Client.getAllClients( (err, clients)=> {
         if (err) {
             res.send(err);
         }

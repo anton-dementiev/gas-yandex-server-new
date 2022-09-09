@@ -17,7 +17,7 @@ const createPayment = (req, res) => {
 const getPaymentById = (req, res) => {
 
     const paymentId = req.params.id;
-    const payment = Payment.getPaymentById(paymentId, (err, payment)=>{
+    Payment.getPaymentById(paymentId, (err, payment)=>{
         if (err) {
             res.send(err);
         }
@@ -42,7 +42,7 @@ const updatePayment = (req, res) => {
 
 const getAllPayments = (req, res) => {
 
-    const payments = Payment.getAllPayments( (err, payments)=> {
+    Payment.getAllPayments( (err, payments)=> {
         if (err) {
             res.send(err);
         }
