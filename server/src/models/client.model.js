@@ -1,4 +1,4 @@
-const cn = require('../../config/db.config');
+const connectionRequest = require('../../config/db.config');
 
 
 const newClient  = (client) => {
@@ -26,12 +26,15 @@ const newClient  = (client) => {
 
 const createClient = (newClient, result) => {
 
-    cn.query("INSERT INTO clients set ?", newClient, (err, res)=>{
+   let cn = connectionRequest();
+   cn.query("INSERT INTO clients set ?", newClient, (err, res)=>{
         if (err) {
             console.log("error: ", err);
             result(err, null);
+            cn.destroy();
         } else {
             result(false, newClient);
+            cn.destroy();
         }
 
 
@@ -40,12 +43,15 @@ const createClient = (newClient, result) => {
 
 const updateClient =(clientId, client, result) => {
 
+    let cn = connectionRequest();
     cn.query("UPDATE clients SET ? WHERE client_id=?", [client, clientId], (err, rows, fields) =>{
         if (err) {
             console.log("error", err);
             result(err, null);
+            cn.destroy();
         } else {
             result(false, rows);
+            cn.destroy();
         }
     });
 }
@@ -53,24 +59,31 @@ const updateClient =(clientId, client, result) => {
 
 const getClientById = (clientId, result) => {
   console.log(clientId);
+  let cn = connectionRequest();
+
    cn.query("SELECT * FROM clients WHERE client_id=?", [clientId], (err, rows, fields)=>{
         if (err) {
             console.log("error: ", err);
             result(err, null);
+            cn.destroy();
         } else {
             console.log(rows);
             result(false, rows);
+            cn.destroy();
         }
    });
 }
 
 const getAllClients =  (result) => {
+    let cn = connectionRequest();
     cn.query("SELECT * FROM clients WHERE deleted_at IS NULL", (err, rows, fields)=> {
         if (err) {
             console.log("error: ", err);
             result(err, null);
+            cn.destroy();
         } else  {
             result(false, rows);
+            cn.destroy();
         }
     });
 }
@@ -79,14 +92,18 @@ const getAllClients =  (result) => {
 const deleteClientById = (clientId, result) => {
 
     console.log(clientId);
+    
+    let cn = connectionRequest();
 
     cn.query("UPDATE clients SET deleted_at=? WHERE client_id=?", [new Date(), clientId], (err, rows, fields)=> {
        if (err) {
         console.log("error: ", err);
         result(err, null);
+        cn.destroy();
       
        } else {
          result(false, rows);
+         cn.destroy();
        }
 
     });

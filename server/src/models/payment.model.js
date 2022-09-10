@@ -1,4 +1,4 @@
-const cn = require('../../config/db.config');
+const connectionRequest = require('../../config/db.config');
 
 
 const newPayment  = (payment) => {
@@ -19,13 +19,15 @@ const newPayment  = (payment) => {
 
 
 const createPayment = (newPayment, result) => {
-
+    let cn = connectionRequest();
     cn.query("INSERT INTO payments set ?", newPayment, (err, res)=>{
         if (err) {
             console.log("error: ", err);
             result(err, null);
+            cn.destroy();
         } else {
             result(false, newPayment);
+            cn.destroy();
         }
 
 
@@ -33,54 +35,64 @@ const createPayment = (newPayment, result) => {
 }
 
 const updatePayment =(paymentId, payment, result) => {
-
+    let cn = connectionRequest();
     cn.query("UPDATE payments SET ? WHERE Payment_id=?", [payment, paymentId], (err, rows, fields) =>{
         if (err) {
             console.log("error", err);
             result(err, null);
+            cn.destroy();
         } else {
             result(false, rows);
+            cn.destroy();
         }
     });
 }
 
 
 const getPaymentById = (paymentId, result) => {
-  console.log(paymentId);
+    console.log(paymentId);
+    let cn = connectionRequest();
    cn.query("SELECT * FROM payments WHERE payment_id=?", [paymentId], (err, rows, fields)=>{
         if (err) {
             console.log("error: ", err);
             result(err, null);
+            cn.destroy();
         } else {
             console.log(rows);
             result(false, rows);
+            cn.destroy();
         }
    });
 }
 
 const getAllPayments =  (result) => {
+    let cn = connectionRequest();
     cn.query("SELECT * FROM payments WHERE deleted_at IS NULL", (err, rows, fields)=> {
         if (err) {
             console.log("error: ", err);
             result(err, null);
+            cn.destroy();
         } else  {
             result(false, rows);
+            cn.destroy();
         }
     });
 }
 
 
 const deletePaymentById = (paymentId, result) => {
-
+let cn = connectionRequest();
     console.log(paymentId);
 
     cn.query("DELETE FROM payments WHERE payment_id=?", [paymentId], (err, rows, fields)=> {
        if (err) {
         console.log("error: ", err);
         result(err, null);
+        cn.destroy();
       
        } else {
          result(false, rows);
+         cn.destroy();
        }
 
     });
