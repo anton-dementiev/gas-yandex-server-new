@@ -65,16 +65,45 @@ const getPaymentById = (paymentId, result) => {
    });
 }
 
+// const getAllPayments =  (result) => {
+//     let cn = connectionRequest();
+//     cn.query("SELECT * FROM payments WHERE deleted_at IS NULL", (err, rows, fields)=> {
+//         if (err) {
+//             console.log("error: ", err);
+//             result(err, null);
+//             cn.destroy();
+//         } else  {
+//             result(false, rows);
+//             cn.destroy();
+//         }
+//     });
+// }
+
+
 const getAllPayments =  (result) => {
     let cn = connectionRequest();
-    cn.query("SELECT * FROM payments WHERE deleted_at IS NULL", (err, rows, fields)=> {
+    cn.query("SELECT * FROM view_payments", (err, payments, fields)=> {
         if (err) {
             console.log("error: ", err);
             result(err, null);
             cn.destroy();
         } else  {
-            result(false, rows);
-            cn.destroy();
+            cn.query("SELECT client_id, name from clients", (err, clients, fields)=>{
+                if (err) {
+                    console.log("error: ", err);
+                    cn.destroy();
+                } else {
+                    cn.query("SELECT currency_id, title from currencies", (err, currencies, fields)=>{
+                        if (err) {
+                            console.log("error: ", err);
+                            cn.destroy();
+                        } else {
+                            result(false, {payments: payments, clientsDropdown: clients, currenciesDropdown: currencies});
+                            cn.destroy();
+                        }
+                    });
+                }
+            });
         }
     });
 }
