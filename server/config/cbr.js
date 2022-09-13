@@ -30,7 +30,7 @@ const cbr_api = "http://www.cbr.ru/scripts/XML_daily.asp?date_req=02/03/2002";
                     console.log(filtered);
                     if (filtered.length > 0) {
                         console.log(filtered[0]["Value"][0]);
-                        let rate = parseInt(filtered[0]["Value"][0].replace(",", "."));
+                        let rate = filtered[0]["Value"][0].replace(",", ".");
                         result(false, rate);
                     } else {
                         return result(true, null);
