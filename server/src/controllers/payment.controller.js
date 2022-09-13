@@ -2,9 +2,9 @@ const Payment = require ('../models/payment.model');
 
 const createPayment = (req, res) => {
     
-    const newEmp = Payment.newPayment(req.body);
+    const newPayment = Payment.newPayment(req.body);
 
-    Payment.createPayment(newEmp, (err, payment)=>{
+    Payment.createPayment(newPayment, (err, payment)=>{
          if (err) {
              res.send(err);
          }
@@ -43,6 +43,7 @@ const updatePayment = (req, res) => {
 const getAllPayments = (req, res) => {
 
     Payment.getAllPayments( (err, payments)=> {
+        
         if (err) {
             res.send(err);
         }

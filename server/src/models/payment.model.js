@@ -8,7 +8,7 @@ const newPayment  = (payment) => {
     amount: payment.amount, 
     currency_id: payment.currency_id, 
     exchange_rate: payment.exchange_rate,
-    Payment_id: payment.Payment_id,
+    client_id: payment.client_id,
     description: payment.description,
     created_at: new Date(),
     deleted_at: null,
