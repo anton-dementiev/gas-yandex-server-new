@@ -27,21 +27,109 @@ const newContract  = (contract) => {
 };
 
 
-const createContract = (newContract, result) => {
+const newContractItems = (items) => {
+
+    return items.map(item => {
+
+        return {
+            title: item.title,
+            qty: item.qty || 0, 
+            amount: item.amount || null,
+            project_id: item.project_id || null, 
+            contract_id: item.contract_id,
+            created_at: new Date(),
+            deleted_at: null,
+        }
+    });
+
+   
+};
+
+
+const createContract = (newContract, contractItems,  result) => {
+
     let cn = connectionRequest();
-    cn.query("INSERT INTO contracts set ?", newContract, (err, res)=>{
+   // let prevQuery = "INSERT INTO contracts set ?";
+
+
+    //INSERT CONTRACTS AND CONTRACT_ITEMS
+    cn.beginTransaction(err=>{
         if (err) {
-            console.log("error: ", err);
+            console.log("Begin transaction error: ", err);
             result(err, null);
-            cn.destroy();
-        } else {
-            result(false, newContract);
             cn.destroy();
         }
 
+        console.log(newContract);
+
+        //CONTRACTS
+        cn.query("INSERT INTO contracts SET ?", newContract, (err, results, fields)=>{
+            if(err) {
+                return cn.rollback(()=>{
+                    console.log("Insert into contracts error: ",err);
+                    result(err, null);
+                    cn.destroy();
+                });          
+            }
+
+            
+            //ITEMS
+            if (contractItems) {
+
+                console.log(results);
+                const contractId = results.insertId;
+                contractItems = contractItems.map(item => {
+                  item.contract_id = contractId;
+                  return Object.values(item);
+                });
+
+                console.log(contractItems);
+
+                cn.query("INSERT INTO contract_items (title, qty, amount, project_id, contract_id, created_at, deleted_at) VALUES ?", [contractItems], (err, results, fields)=>{
+                    if (err) {
+                       return cn.rollback(()=>{
+                            console.log("Insert into items error ", err);
+                            result(err, null);
+                            cn.destroy();
+                        });     
+                    }
+                });
+            }
+
+            cn.commit(err=>{
+                if (err) {
+                   return cn.rollback(()=>{
+                        console.log("commit error ", err);
+                        result(err, null);
+                        cn.destroy();
+                    });
+                }
+
+                result(false, results);
+            });
+
+
+        });
+
+    
+
+
 
     });
-}
+
+//     cn.query("INSERT INTO contracts set ?", newContract, (err, res)=>{
+//         if (err) {
+//             console.log("error: ", err);
+//             result(err, null);
+//             cn.destroy();
+//         } else {
+//             result(false, newContract);
+//             cn.destroy();
+//         }
+
+
+//     });
+ }
 
 
 const updateContract =(contractId, contract, result) => {
@@ -57,6 +145,8 @@ let cn = connectionRequest();
         }
     });
 }
+
+
 
 const getContractById = (contractId, result) => {
   let cn = connectionRequest();
@@ -111,6 +201,7 @@ const deleteContractById = (contractId, result) => {
 
 module.exports = {
     newContract, 
+    newContractItems,
     createContract, 
     updateContract,
     getContractById,

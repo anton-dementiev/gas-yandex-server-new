@@ -3,13 +3,15 @@ const Contract = require ('../models/contract.model');
 const createContract = (req, res) => {
     
     const newContract = Contract.newContract(req.body);
+    const contractItems = Contract.newContractItems(req.body.items);
 
-    Contract.createContract(newContract, (err, contract)=>{
+    Contract.createContract(newContract, contractItems, (err, contract)=>{
+        
          if (err) {
-             res.send(err);
+             return res.send(err);
          }
 
-         res.json({error:false, message: "Success", data: contract})
+        return res.json({error:false, message: "Success", data: contract})
     });
 }
 
