@@ -5,7 +5,7 @@ const createContract = (req, res) => {
     console.log("Logging data");
     console.log(req.body);
     const newContract = Contract.newContract(req.body);
-    const contractItems = Contract.newContractItems(req.body.items);
+    const contractItems = Contract.newContractItems(JSON.parse(req.body.items));
 
     console.log(contractItems);
 
