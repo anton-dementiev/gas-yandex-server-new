@@ -5,6 +5,8 @@ const createContract = (req, res) => {
     const newContract = Contract.newContract(req.body);
     const contractItems = Contract.newContractItems(req.body.items);
 
+    console.log(contractItems);
+
     Contract.createContract(newContract, contractItems, (err, contract)=>{
         
          if (err) {

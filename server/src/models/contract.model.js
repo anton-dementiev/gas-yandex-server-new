@@ -17,6 +17,10 @@ const newContract  = (contract) => {
     date_closed: contract.date_closed,
     client_id: contract.client_id,
     is_terminated: contract.is_terminated,
+    
+    /* Items array */
+    items: contract.items, 
+
     created_at: new Date(),
     deleted_at: null,
 
