@@ -4,10 +4,10 @@ const createContract = (req, res) => {
     
     console.log("Logging data");
     console.log(req.body);
-    console.log(req.body.items);
 
     const newContract = Contract.newContract(req.body);
-    const contractItems = Contract.newContractItems(req.body.items);
+    
+    const contractItems = Contract.newContractItems(req.body?.items);
 
     console.log("parsedItems");
     console.log(contractItems);

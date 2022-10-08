@@ -29,6 +29,10 @@ const newContract  = (contract) => {
 
 const newContractItems = (items) => {
 
+    if (!items) {
+        return null;
+    }
+
     return items.map(item => {
 
         return {
