@@ -7,7 +7,7 @@ const createContract = (req, res) => {
 
     const newContract = Contract.newContract(req.body);
     
-    const contractItems = Contract.newContractItems(req.body?.items);
+    const contractItems = req.body.hasOwnProperty("items") ? Contract.newContractItems(req.body.items) : null;
 
     console.log("parsedItems");
     console.log(contractItems);
