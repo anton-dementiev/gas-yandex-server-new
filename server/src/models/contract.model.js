@@ -155,15 +155,25 @@ let cn = connectionRequest();
 const getContractById = (contractId, result) => {
   let cn = connectionRequest();
   console.log(contractId);
-   cn.query("SELECT * FROM contracts WHERE contract_id=?", [contractId], (err, rows, fields)=>{
+   cn.query("SELECT * FROM contracts WHERE contract_id=?", [contractId], (err, contract, fields)=>{
         if (err) {
             console.log("error: ", err);
             result(err, null);
             cn.destroy();
         } else {
-            console.log(rows);
-            result(false, rows);
-            cn.destroy();
+            cn.query("SELECT * FROM contract_items WHERE contract_id=?", [contractId], (err, items)=>{
+                console.log(items);
+                if (err) {
+                    console.log("error :", err);
+                    result(err, null);
+                    cn.destroy();
+                } else {
+                    contract.items = items;
+                    console.log(contract);
+                    result(false, contract);
+                    cn.destroy();
+                }
+            });
         }
    });
 }
