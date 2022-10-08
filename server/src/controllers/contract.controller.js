@@ -5,9 +5,11 @@ const createContract = (req, res) => {
     console.log("Logging data");
     console.log(req.body);
 
-    const newContract = Contract.newContract(req.body);
+    const payload = JSON.parse(req.body);
+
+    const newContract = Contract.newContract(payload);
     
-    const contractItems = req.body.hasOwnProperty("items") ? Contract.newContractItems(req.body.items) : null;
+    const contractItems = payload.hasOwnProperty("items") ? Contract.newContractItems(payload.items) : null;
 
     console.log("parsedItems");
     console.log(contractItems);
