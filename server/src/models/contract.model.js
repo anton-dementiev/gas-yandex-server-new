@@ -153,9 +153,10 @@ let cn = connectionRequest();
 
 
 const getContractById = (contractId, result) => {
+
   let cn = connectionRequest();
   console.log(contractId);
-   cn.query("SELECT * FROM contracts WHERE contract_id=?", [contractId], (err, contract, fields)=>{
+   cn.query("SELECT * FROM contracts WHERE contract_id=?", [contractId], (err, results, fields)=>{
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -168,9 +169,13 @@ const getContractById = (contractId, result) => {
                     result(err, null);
                     cn.destroy();
                 } else {
-                    contract.items = items;
-                    console.log(contract);
-                    result(false, contract);
+                    console.log("COntract by ID")
+                    if (results.length > 0) {
+                        results[0].items = items;
+                    } 
+                    
+                    console.log(results);
+                    result(false, results);
                     cn.destroy();
                 }
             });
