@@ -156,11 +156,21 @@ const getContractById = (contractId, result) => {
 
   let cn = connectionRequest();
   console.log(contractId);
-   cn.query("SELECT * FROM contracts WHERE contract_id=?", [contractId], (err, results, fields)=>{
+  cn.query(
+    `select 
+   co.contract_id, co.title, co.description,
+   co.projected_total, co.rate, co.projected_budget,
+   co.currency_id, cu.title as currency_title, co.date_signed, co.date_closed,
+   co.client_id, cl.name as client_name, co.is_terminated
+   from contracts co
+   join currencies cu using(currency_id)
+   join clients cl using(client_id) WHERE contract_id=?`, [contractId], (err, results, fields)=>{
+
         if (err) {
             console.log("error: ", err);
             result(err, null);
             cn.destroy();
+
         } else {
             cn.query("SELECT * FROM contract_items WHERE contract_id=?", [contractId], (err, items)=>{
                 console.log(items);
