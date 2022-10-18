@@ -111,6 +111,20 @@ const deleteExpenseById = (expenseId, result) => {
     });
 }
 
+const getAllExpensesView = (result) => {
+    let cn = connectionRequest();
+    cn.query("SELECT * FROM expenses_view", (err, rows, fields)=>{
+        if (err) {
+            console("error: ", err);
+            result(err, null);
+            cn.destroy();
+        } else {
+            result(false, rows);
+            cn.destroy();
+        }
+    });
+}
+
 
 module.exports = {
     newExpense, 
@@ -119,4 +133,5 @@ module.exports = {
     getExpenseById,
     getAllExpenses,
     deleteExpenseById,
+    getAllExpensesView,
 };

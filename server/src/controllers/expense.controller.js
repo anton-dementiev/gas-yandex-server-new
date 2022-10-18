@@ -63,6 +63,14 @@ const deleteExpenseById = (req, res) => {
      });
 }
 
+const getAllExpensesView = (req, res) => {
+    Expense.getAllExpensesView((err, expenses) => {
+        if (err) {
+            res.send(err);
+        }
+        res.json({error: false, message: "Success", data: expenses});
+    });
+}
 
 
 module.exports = {
@@ -71,4 +79,5 @@ module.exports = {
     getExpenseById,
     getAllExpenses,
     deleteExpenseById,
+    getAllExpensesView,
 }

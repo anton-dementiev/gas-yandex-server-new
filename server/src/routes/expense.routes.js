@@ -7,6 +7,9 @@ const expenseController = require('../controllers/expense.controller');
 //Get all Expenses
 router.get("/expenses", expenseController.getAllExpenses);
 
+//Get expenses as a view 
+router.get("/expenses_view", expenseController.getAllExpensesView);
+
 //Create New Expense
 router.post("/expenses", expenseController.createExpense);
 
