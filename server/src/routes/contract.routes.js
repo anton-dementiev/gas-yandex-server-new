@@ -9,7 +9,7 @@ const contractController = require('../controllers/contract.controller');
 router.get("/contracts", contractController.getAllContracts);
 
 //Get All Contracts in a View
-router.get("contracts_view", contractController.getAllContractsView);
+router.get("/contracts_view", contractController.getAllContractsView);
 
 //Create New Contract
 router.post("/contracts", contractController.createContract);
