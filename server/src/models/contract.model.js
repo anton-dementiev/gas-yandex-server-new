@@ -207,8 +207,23 @@ const getAllContracts =  (result) => {
     });
 }
 
+const getAllContractsView = (result) => {
+    let cn = connectionRequest();
+    cn.query("SELECT * FROM contracts_view", (err, rows, fields)=> {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            cn.destroy();
+        } else  {
+            result(false, rows);
+            cn.destroy();
+        }
+    });
+}
+
 
 const deleteContractById = (contractId, result) => {
+
     let cn = connectionRequest();
     console.log(contractId);
 
@@ -236,4 +251,5 @@ module.exports = {
     getContractById,
     getAllContracts,
     deleteContractById,
+    getAllContractsView,
 };

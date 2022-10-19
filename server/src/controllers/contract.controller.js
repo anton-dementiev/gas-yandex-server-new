@@ -76,6 +76,17 @@ const deleteContractById = (req, res) => {
      });
 }
 
+const getAllContractsView = (req, res) => {
+
+    Contract.getAllContractsView((err, contracts)=> {
+        if (err) {
+            res.send(err);
+        }
+
+        res.json({error: false, message: "Success", data: contracts})
+    });
+}
+
 
 
 module.exports = {
@@ -84,4 +95,5 @@ module.exports = {
     getContractById,
     getAllContracts,
     deleteContractById,
+    getAllContractsView,
 }

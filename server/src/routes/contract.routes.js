@@ -5,19 +5,22 @@ const contractController = require('../controllers/contract.controller');
 
 
 
-//Get all Projects
+//Get all Contracts
 router.get("/contracts", contractController.getAllContracts);
 
-//Create New Project
+//Get All Contracts in a View
+router.get("contracts_view", contractController.getAllContractsView);
+
+//Create New Contract
 router.post("/contracts", contractController.createContract);
 
-//Update Project By Id
+//Update Contract By Id
 router.put("/contracts/:id", contractController.updateContract);
 
-//Get Project By Id 
+//Get Contract By Id 
 router.get("/contracts/:id", contractController.getContractById);
 
-//Delete Project By Id
+//Delete Contract By Id
 router.delete("/contracts/:id", contractController.deleteContractById);
 
 
