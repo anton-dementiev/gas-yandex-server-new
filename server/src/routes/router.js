@@ -5,6 +5,7 @@ const paymentRoutes = require('./payment.routes');
 const contractRoutes = require('./contract.routes');
 const currencyRoutes = require('./currency.routes');
 const expenseRoutes = require('./expense.routes');
+const invoiceRoutes = require('./invoice.routes');
 
 const helperRoutes = require('./helper.routes');
 
@@ -19,6 +20,7 @@ router.use(contractRoutes);
 router.use(paymentRoutes);
 router.use(currencyRoutes);
 router.use(expenseRoutes);
+router.use(invoiceRoutes);
 
 router.use(helperRoutes);
 
