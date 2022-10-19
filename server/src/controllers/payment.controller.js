@@ -64,6 +64,17 @@ const deletePaymentById = (req, res) => {
 }
 
 
+const getAllPaymentsView = (req, res) => {
+
+    Payment.getAllPaymentsView( (err, payments)=> {
+        
+        if (err) {
+            res.send(err);
+        }
+
+        res.json({error: false, message: "Success", data: payments})
+    });
+}
 
 
 
@@ -73,4 +84,5 @@ module.exports = {
     getPaymentById,
     getAllPayments,
     deletePaymentById,
+    getAllPaymentsView,
 }

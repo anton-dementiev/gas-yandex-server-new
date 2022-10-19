@@ -128,6 +128,24 @@ let cn = connectionRequest();
 }
 
 
+const getAllPaymentsView = (result) => {
+
+    let cn = connectionRequest();
+
+    cn.query("SELECT * FROM payments_view", (err, payments, fields)=> {
+       if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        cn.destroy();
+      
+       } else {
+         result(false, payments);
+         cn.destroy();
+       }
+
+    });
+}
+
 module.exports = {
     newPayment, 
     createPayment, 
@@ -135,4 +153,5 @@ module.exports = {
     getPaymentById,
     getAllPayments,
     deletePaymentById,
+    getAllPaymentsView,
 };
